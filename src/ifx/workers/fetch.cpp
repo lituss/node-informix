@@ -135,10 +135,11 @@ namespace workers {
 					{
 						ifx_loc_t *loc = (ifx_loc_t *) sqlvar->sqldata;
 						if (loc->loc_size > 0) {
-							char buffer[loc->loc_size + 1];
+							char *buffer = new char[loc->loc_size + 1];
 							memcpy( buffer, loc->loc_buffer, loc->loc_size );
 							buffer[loc->loc_size] = '\0';
 							result->Set( Nan::New< v8::Integer >( i ), Nan::New< v8::String >( buffer ).ToLocalChecked() );
+							delete[] buffer;
 						} else {
 							result->Set( Nan::New< v8::Integer >( i ), Nan::Undefined() );
 						}
